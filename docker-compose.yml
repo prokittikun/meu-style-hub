@@ -1,0 +1,24 @@
+version: '3'
+services:
+  meu:
+    build:
+      context: .
+      args:
+        DATABASE_URL: "postgres://postgres:root@db:5432/postgres"
+    ports:
+      - 3000:3000
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      - db
+  db:
+    container_name: db
+    image: postgres:latest
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - db_vol:/var/lib/postgresql/data
+volumes:
+  db_vol:
